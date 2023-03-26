@@ -1,18 +1,17 @@
 const http = require("http");
 const fs = require("fs");
-const args = require("minimist")(process.argv);
+const args = require("minimist")(process.argv.slice(2));
 let homecn = "";
 let projecn = "";
 let regcn = "";
+let rs="";
 
 fs.readFile("home.html", (error, home) => {
   if (error) {
     throw error;
   }
-  else{
-    homecn = home;
-  }
-  
+  homecn = home;
+    
 });
 
 fs.readFile("project.html", (error, project) => {
@@ -28,15 +27,15 @@ fs.readFile("registration.html", (error, registration) => {
   }
   regcn = registration;
 });
-fs.readFile("/script.js",(error,data)=>{
+fs.readFile("script.js",(error,data)=>{
   if (error) throw error;
-  rs=data.toString();
+  rs=data;
 })
 
 http
   .createServer((request, response) => {
     let url = request.url;
-    response.writeHeader(200, { "Content-Type": "text/html" });
+    response.writeHead(200, { "Content-Type": "text/html" });
     switch (url) {
       case "/project":
         response.write(projecn);
@@ -46,6 +45,10 @@ http
         response.write(regcn);
         response.end();
         break;
+      case "/script.js":
+            response.write(rs);
+            response.end();
+            break;
       default:
         response.write(homecn);
         response.end();
