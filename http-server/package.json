@@ -6,6 +6,9 @@
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "BOLD <22951A6210@iare.ac.in>",
+    "author": "BOLD-3536 <22951A6210@iare.ac.in>",
     "license": "ISC"
+    "dependencies": {
+    "minimist": "^1.2.6"
+  }
   }
