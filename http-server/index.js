@@ -1,6 +1,6 @@
 const http = require("http");
 const fs = require("fs");
-const args = require("minimist")(process.argv);
+const argv = require("minimist")(process.argv.slice(2));
 let homec = "";
 let proc1 = "";
 let repc1 = "";
@@ -9,9 +9,7 @@ fs.readFile("home.html", (errors, home) => {
   if (errors) {
     throw errors;
   }
-  else{
     homec = home;
-  }
   
 });
 
@@ -28,12 +26,12 @@ fs.readFile("registration.html", (errors, registration) => {
   }
   repc1 = registration;
 });
-fs.readFile("/index.js",(err,data)=>{
-  if (err) throw err;
-  rs=data.toString();
-})
+//fs.readFile("/index.js",(err,data)=>{
+//  if (err) throw err;
+//  rs=data.toString();
+//})
 
-http
+const server=http
   .createServer((request, response) => {
     let url = request.url;
     response.writeHeader(200, { "Content-Type": "text/html" });
@@ -51,5 +49,8 @@ http
         response.end();
         break;
     }
-  })
-  .listen(args.port);
+  });
+  const port = argv.port || 9000;
+  server.listen(port, ()=>{
+    console.log('port no. ${port}');
+  });
