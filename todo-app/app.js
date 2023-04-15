@@ -10,6 +10,13 @@ app.get("/", function (request, response) {
 
 app.get("/todos", async function (_request, response) {
   console.log("Processing list of all Todos ...");
+  try {
+    const todos = await Todo.findAll();
+    return response.send(todos);
+  } catch (error) {
+    console.log(error);
+    return response.status(422).json(error);
+  }
   // FILL IN YOUR CODE HERE
 
   // First, we have to query our PostgerSQL database using Sequelize to get list of all Todos.
